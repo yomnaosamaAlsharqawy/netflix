@@ -11,7 +11,7 @@ local_settings.py
 db.sqlite3
 media
 .idea
-
+*.sqlite3
 ### Linux ###
 *~
 
