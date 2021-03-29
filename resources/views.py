@@ -14,3 +14,18 @@ def show_all_movies(request):
     movies = Movies.objects.all()
     serializer = MovieSerializer(instance=movies,many=True)
     return Response(serializer.data,status=status.HTTP_200_OK)
+
+@api_view(["POST",])
+def create(request):
+    serializer = MovieSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(data={
+            "success": True,
+            "message": "Movie has been created successfully"
+        }, status=status.HTTP_201_CREATED)
+
+    return Response(data={
+        "success": False,
+        "errors": serializer.errors,
+    }, status=status.HTTP_400_BAD_REQUEST)
