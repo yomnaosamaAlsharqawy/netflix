@@ -6,7 +6,7 @@ class Movies(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField()
     time = models.TimeField()
-    image = models.ImageField()
+    image = models.URLField()
     year = models.DateField()
     likes = models.IntegerField()
     dislikes = models.IntegerField()
@@ -22,7 +22,7 @@ class Tvshows(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField()
     time = models.TimeField()
-    image = models.ImageField()
+    image = models.URLField()
     year = models.DateField()
     likes = models.IntegerField()
     dislikes = models.IntegerField()
@@ -48,7 +48,7 @@ class Episodes(models.Model):
     url = models.URLField()
     season = models.ForeignKey(Seasons,on_delete=models.SET_NULL,null=True)
 
-    def __init__(self):
+    def __str__(self):
         return self.name
 class Casts(models.Model):
     name = models.CharField(max_length=25)
@@ -56,7 +56,7 @@ class Casts(models.Model):
     movie = models.ManyToManyField(Movies)
     tv_show = models.ManyToManyField(Tvshows)
 
-    def __init__(self):
+    def __str__(self):
         return self.name
 
 class Genre(models.Model):
@@ -64,7 +64,7 @@ class Genre(models.Model):
     movie = models.ManyToManyField(Movies)
     tv_show = models.ManyToManyField(Tvshows)
 
-    def __init__(self):
+    def __str__(self):
         return self.genre
 
 class Moods(models.Model):
@@ -72,5 +72,5 @@ class Moods(models.Model):
     movie = models.ManyToManyField(Movies)
     tv_show = models.ManyToManyField(Tvshows)
 
-    def __init__(self):
+    def __str__(self):
         return self.mood

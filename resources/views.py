@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import response
 from resources.models import Movies,Tvshows,Moods,Casts,Genre
-from resources.serializers import MovieSerializer
+from resources.serializers import MovieSerializer,CastSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import  Response
 from rest_framework import status
@@ -15,8 +15,9 @@ def show_all_movies(request):
     serializer = MovieSerializer(instance=movies,many=True)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
+
 @api_view(["POST",])
-def create(request):
+def create_movie(request):
     serializer = MovieSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -29,3 +30,29 @@ def create(request):
         "success": False,
         "errors": serializer.errors,
     }, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+@api_view(["GET",])
+def show_all_casts(request):
+    casts = Casts.objects.all()
+    serializer = CastSerializer(instance=casts,many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+@api_view(["POST",])
+def create_cast(request):
+    serializer = CastSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(data={
+            "success": True,
+            "message": "Cast has been created successfully"
+        }, status=status.HTTP_201_CREATED)
+
+    return Response(data={
+        "success": False,
+        "errors": serializer.errors,
+    }, status=status.HTTP_400_BAD_REQUEST)
+
