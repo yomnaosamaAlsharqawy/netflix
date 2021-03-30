@@ -1,4 +1,5 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from django.http import response
 from resources.models import Movies,Tvshows,Moods,Casts,Genre
 from resources.serializers import MovieSerializer,CastSerializer
@@ -56,3 +57,7 @@ def create_cast(request):
         "errors": serializer.errors,
     }, status=status.HTTP_400_BAD_REQUEST)
 
+=======
+
+# Create your views here.
+>>>>>>> master

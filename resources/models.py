@@ -1,43 +1,74 @@
 from django.db import models
 
-# Create your models here.
+
+class Casts(models.Model):
+    name = models.CharField(max_length=25)
+    role = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+
+
+class Genres(models.Model):
+    genre = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.genre
+
+
+class Moods(models.Model):
+    mood = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.mood
+
+
 
 class Movies(models.Model):
     name = models.CharField(max_length=25)
-    description = models.TextField()
+    description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.URLField()
+    image = models.ImageField()
     year = models.DateField()
     likes = models.IntegerField()
     dislikes = models.IntegerField()
-    url  = models.URLField()
+    url = models.URLField()
     age = models.IntegerField()
     views = models.IntegerField()
     trailer = models.URLField()
+    casts = models.ManyToManyField(Casts)
+    moods = models.ManyToManyField(Moods)
+    genres = models.ManyToManyField(Genres)
 
     def __str__(self):
         return self.name
+
 
 class Tvshows(models.Model):
     name = models.CharField(max_length=25)
-    description = models.TextField()
+    description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.URLField()
+    image = models.ImageField()
     year = models.DateField()
     likes = models.IntegerField()
     dislikes = models.IntegerField()
     age = models.IntegerField()
     views = models.IntegerField()
     trailer = models.URLField()
+    casts = models.ManyToManyField(Casts)
+    moods = models.ManyToManyField(Moods)
+    genres = models.ManyToManyField(Genres)
 
     def __str__(self):
         return self.name
+
 
 class Seasons(models.Model):
     season = models.IntegerField()
     tv_show = models.ForeignKey(Tvshows,on_delete=models.SET_NULL,null=True)
     def __str__(self):
         return self.season
+
 
 class Episodes(models.Model):
     name = models.CharField(max_length=25)
@@ -50,27 +81,5 @@ class Episodes(models.Model):
 
     def __str__(self):
         return self.name
-class Casts(models.Model):
-    name = models.CharField(max_length=25)
-    role = models.CharField(max_length=25)
-    movie = models.ManyToManyField(Movies)
-    tv_show = models.ManyToManyField(Tvshows)
 
-    def __str__(self):
-        return self.name
 
-class Genre(models.Model):
-    genre = models.CharField(max_length=25)
-    movie = models.ManyToManyField(Movies)
-    tv_show = models.ManyToManyField(Tvshows)
-
-    def __str__(self):
-        return self.genre
-
-class Moods(models.Model):
-    mood = models.CharField(max_length=25)
-    movie = models.ManyToManyField(Movies)
-    tv_show = models.ManyToManyField(Tvshows)
-
-    def __str__(self):
-        return self.mood
