@@ -198,7 +198,7 @@ celerybeat-schedule
 .env
 
 # virtualenv
-venv/
+VenV/
 ENV/
 migrations
 
