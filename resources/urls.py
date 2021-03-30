@@ -5,5 +5,5 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.index),
+    path('moviegenres/<str:genre>', views.GetMovieWithGenres),
 ]

@@ -7,12 +7,9 @@ from rest_framework.decorators import api_view , permission_classes
 #from rest_framework import generics
 from .serializers import MovieSerializer
 
-
-@api_view(["GET",])
-def index(request):
-    movies = Movies.objects.all()
+@api_view(['GET',])
+def GetMovieWithGenres(request,genre):
+    movies = Movies.objects.filter(genres__genre=genre)
     serializer = MovieSerializer(instance=movies,many=True)
     return Response(data=serializer.data,status=status.HTTP_200_OK)
-
-
 
