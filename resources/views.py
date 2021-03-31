@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import response
 from resources.models import Movies,Tvshows,Moods,Casts,Genres,Country
-from resources.serializers import MovieSerializer,CastSerializer,CountrySerializer
+from resources.serializers import MovieSerializer,CastSerializer,CountrySerializer,TvshowsSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import  Response
 from rest_framework import status
@@ -15,6 +15,12 @@ def show_all_movies(request):
     serializer = MovieSerializer(instance=movies,many=True)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
+@api_view(["GET",])
+def show_all_tv_shows(request):
+    tv_shows = Tvshows.objects.all()
+    serializer = TvshowsSerializer(instance=tv_shows,many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
+
 
 @api_view(["POST",])
 def create_movie(request):
@@ -24,6 +30,21 @@ def create_movie(request):
         return Response(data={
             "success": True,
             "message": "Movie has been created successfully"
+        }, status=status.HTTP_201_CREATED)
+
+    return Response(data={
+        "success": False,
+        "errors": serializer.errors,
+    }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["POST",])
+def create_tv_show(request):
+    serializer = TvshowsSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(data={
+            "success": True,
+            "message": "Tv Show has been created successfully"
         }, status=status.HTTP_201_CREATED)
 
     return Response(data={
@@ -89,8 +110,21 @@ def show_country_movies(request,country):
 
 
 @api_view(["GET",])
+def show_country_tv_shows(request,country):
+    tv_show = Tvshows.objects.filter(country__name=country)[:2]
+    serializer = MovieSerializer(instance=tv_show,many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+@api_view(["GET",])
 def top_ten_movies(request,country):
     movies = Movies.objects.order_by('views').reverse().filter(country__name=country)[:10]
     serializer = MovieSerializer(instance=movies,many=True)
     return Response(serializer.data,status=status.HTTP_200_OK)
 
+
+@api_view(["GET",])
+def top_ten_tv_show(request,country):
+    tv_show = Tvshows.objects.order_by('views').reverse().filter(country__name=country)[:10]
+    serializer = MovieSerializer(instance=tv_show,many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)

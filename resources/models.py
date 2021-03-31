@@ -35,7 +35,7 @@ class Movies(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.ImageField()
+    image = models.URLField()
     year = models.DateField()
     likes = models.IntegerField()
     dislikes = models.IntegerField()
@@ -47,6 +47,7 @@ class Movies(models.Model):
     genres = models.ManyToManyField(Moods)
     moods = models.ManyToManyField(Genres)
     country = models.ForeignKey(Country , on_delete=models.SET_NULL,null=True)
+
     def __str__(self):
         return self.name
 
@@ -55,7 +56,7 @@ class Tvshows(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.ImageField()
+    image = models.URLField()
     year = models.DateField()
     likes = models.IntegerField()
     dislikes = models.IntegerField()
@@ -65,6 +66,7 @@ class Tvshows(models.Model):
     casts = models.ManyToManyField(Casts)
     moods = models.ManyToManyField(Moods)
     genres = models.ManyToManyField(Genres)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
