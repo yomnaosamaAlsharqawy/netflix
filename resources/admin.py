@@ -1,8 +1,6 @@
 from django.contrib import admin
-<<<<<<< HEAD
 
 # Register your models here.
-=======
 from .models import *
 
 
@@ -21,4 +19,3 @@ admin.site.register(Genres)
 admin.site.register(Moods)
 admin.site.register(Seasons)
 admin.site.register(Episodes)
->>>>>>> master

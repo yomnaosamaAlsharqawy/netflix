@@ -23,6 +23,13 @@ class Moods(models.Model):
         return self.mood
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=20)
+
+
+    def __str__(self):
+        return self.name
+
 
 class Movies(models.Model):
     name = models.CharField(max_length=25)
@@ -37,9 +44,9 @@ class Movies(models.Model):
     views = models.IntegerField()
     trailer = models.URLField()
     casts = models.ManyToManyField(Casts)
-    moods = models.ManyToManyField(Moods)
-    genres = models.ManyToManyField(Genres)
-
+    genres = models.ManyToManyField(Moods)
+    moods = models.ManyToManyField(Genres)
+    country = models.ForeignKey(Country , on_delete=models.SET_NULL,null=True)
     def __str__(self):
         return self.name
 
@@ -81,5 +88,3 @@ class Episodes(models.Model):
 
     def __str__(self):
         return self.name
-
-
