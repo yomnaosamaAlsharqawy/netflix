@@ -31,12 +31,12 @@ class Movies(models.Model):
     time = models.TimeField()
     image = models.ImageField()
     year = models.DateField()
-    likes = models.IntegerField()
-    dislikes = models.IntegerField()
-    url = models.URLField()
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
+    url = models.FileField()
     age = models.IntegerField()
-    views = models.IntegerField()
-    trailer = models.URLField()
+    views = models.IntegerField(default=0)
+    trailer = models.FileField()
     casts = models.ManyToManyField(Casts)
     moods = models.ManyToManyField(Moods)
     genres = models.ManyToManyField(Genres)
@@ -48,14 +48,13 @@ class Movies(models.Model):
 class Tvshows(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
-    time = models.TimeField()
     image = models.ImageField()
     year = models.DateField()
-    likes = models.IntegerField()
-    dislikes = models.IntegerField()
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     age = models.IntegerField()
-    views = models.IntegerField()
-    trailer = models.URLField()
+    views = models.IntegerField(default=0)
+    trailer = models.FileField()
     casts = models.ManyToManyField(Casts)
     moods = models.ManyToManyField(Moods)
     genres = models.ManyToManyField(Genres)
@@ -63,13 +62,21 @@ class Tvshows(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def seasons(self):
+        return self.seasons_set.all()
+
 
 class Seasons(models.Model):
     season = models.IntegerField()
     tv_show = models.ForeignKey(Tvshows, on_delete=models.SET_NULL, null=True)
 
-    def __str__(self):
+    def __int__(self):
         return self.season
+
+    @property
+    def episodes(self):
+        return self.episodes_set.all()
 
 
 class Episodes(models.Model):
@@ -78,7 +85,7 @@ class Episodes(models.Model):
     time = models.TimeField()
     image = models.ImageField()
     descriptions = models.TextField(max_length=200)
-    url = models.URLField()
+    url = models.FileField()
     season = models.ForeignKey(Seasons, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
