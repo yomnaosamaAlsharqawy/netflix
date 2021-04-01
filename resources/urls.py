@@ -7,4 +7,6 @@ from . import views
 urlpatterns = [
     path('moviegenres/<str:genre>', views.GetMovieWithGenres),
     path('tvshowgenres/<str:genre>', views.GetTvshowWithGenres),
+    path('getepisodes/<int:id>', views.GetEpisodes),
+    
 ]
