@@ -81,10 +81,9 @@ class Seasons(models.Model):
 
 class Episodes(models.Model):
     name = models.CharField(max_length=25)
-    description = models.TextField()
+    description = models.TextField(max_length=200)
     time = models.TimeField()
     image = models.ImageField()
-    descriptions = models.TextField(max_length=200)
     url = models.FileField()
     season = models.ForeignKey(Seasons, on_delete=models.SET_NULL, null=True)
 
