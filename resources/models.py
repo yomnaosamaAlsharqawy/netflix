@@ -28,7 +28,7 @@ class Movies(models.Model):
     name = models.CharField(max_length=25)
     # slug = models.SlugField(default=None, blank=True, unique=True, max_length=150)
     description = models.TextField(max_length=200)
-    time = models.TimeField()
+    time = models.IntegerField()
     image = models.ImageField()
     year = models.DateField()
     likes = models.IntegerField(default=0)
@@ -71,6 +71,9 @@ class Seasons(models.Model):
     season = models.IntegerField()
     tv_show = models.ForeignKey(Tvshows, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.tv_show.name + str(self.season)
+
     def __int__(self):
         return self.season
 
@@ -82,10 +85,10 @@ class Seasons(models.Model):
 class Episodes(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
-    time = models.TimeField()
+    time = models.IntegerField()
     image = models.ImageField()
     url = models.FileField()
     season = models.ForeignKey(Seasons, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name + str(self.season.season)
