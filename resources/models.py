@@ -71,6 +71,8 @@ class Seasons(models.Model):
     season = models.IntegerField()
     tv_show = models.ForeignKey(Tvshows, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.tv_show.name + str(self.season)
     def __int__(self):
         return self.season
 
