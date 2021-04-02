@@ -5,31 +5,26 @@ from resources.models import Movies,Tvshows,Casts,Genres,Moods,Country
 class CastSerializer(serializers.ModelSerializer):
     class Meta:
         model = Casts
-        fields = '__all__'
+        fields = ['name','role']
 
 
 class GenresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genres
-        fields = '__all__'
+        fields = ['name']
 
 
 class MoodsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Moods
-        fields = '__all__'
+        fields = ['name']
 
 
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
-        fields = '__all__'
-
-class CountrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Country
-        fields = '__all__'
+        fields = ['name']
 
 
 

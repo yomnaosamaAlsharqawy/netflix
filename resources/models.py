@@ -10,17 +10,17 @@ class Casts(models.Model):
 
 
 class Genres(models.Model):
-    genre = models.CharField(max_length=25)
+    name = models.CharField(max_length=25)
 
     def __str__(self):
-        return self.genre
+        return self.name
 
 
 class Moods(models.Model):
-    mood = models.CharField(max_length=25)
+    name = models.CharField(max_length=25)
 
     def __str__(self):
-        return self.mood
+        return self.name
 
 
 class Country(models.Model):
@@ -30,20 +30,19 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
-
 class Movies(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.URLField()
+    image = models.ImageField(upload_to='movies/posters')
     year = models.DateField()
-    likes = models.IntegerField()
-    dislikes = models.IntegerField()
+    likes = models.IntegerField(null=True)
+    dislikes = models.IntegerField(null=True)
     url = models.URLField()
     age = models.IntegerField()
-    views = models.IntegerField()
+    views = models.IntegerField(null=True)
     trailer = models.URLField()
-    casts = models.ManyToManyField(Casts)
+    casts = models.ManyToManyField(Casts,related_name="cast")
     genres = models.ManyToManyField(Moods)
     moods = models.ManyToManyField(Genres)
     country = models.ForeignKey(Country , on_delete=models.SET_NULL,null=True)
@@ -56,12 +55,12 @@ class Tvshows(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.URLField()
+    image = models.ImageField(upload_to='movies/posters')
     year = models.DateField()
-    likes = models.IntegerField()
-    dislikes = models.IntegerField()
+    likes = models.IntegerField(null=True)
+    dislikes = models.IntegerField(null=True)
     age = models.IntegerField()
-    views = models.IntegerField()
+    views = models.IntegerField(null=True)
     trailer = models.URLField()
     casts = models.ManyToManyField(Casts)
     moods = models.ManyToManyField(Moods)
@@ -84,7 +83,6 @@ class Episodes(models.Model):
     description = models.TextField()
     time = models.TimeField()
     image = models.ImageField()
-    description = models.TextField()
     url = models.URLField()
     season = models.ForeignKey(Seasons,on_delete=models.SET_NULL,null=True)
 
