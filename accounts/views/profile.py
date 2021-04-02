@@ -15,11 +15,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 @api_view(['POST', ])
 def profile_login(request, id):
-    request_pin_code = request.data.get('pin_code', None)
+    pin_code = request.data.get('pin_code', None)
     profile = Profile.objects.get(pk=id)
-    stored_pin_code = profile.pin_code
 
-    if request_pin_code != stored_pin_code:
+    if pin_code != profile.pin_code:
         return Response(data={
             "success": False,
             "message": "Incorrect Pin Code"
@@ -31,10 +30,11 @@ def profile_login(request, id):
     }, status=status.HTTP_200_OK)
 
 
-
 class ProfileList(ListAPIView):
-    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+    def get_queryset(self, request, id):
+        return Profile.objects.filter(pk=id)
 
 
 class ProfileCreate(CreateAPIView):
