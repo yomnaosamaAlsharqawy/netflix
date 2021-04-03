@@ -1,5 +1,5 @@
 from django.db import models
-from . import Account
+from accounts.models.account import Account
 
 
 class Profile(models.Model):

@@ -4,17 +4,19 @@ from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework import serializers
 from rest_framework import status
-from accounts.models import Account
+from accounts.models.account import Account
 from django.core.validators import validate_email
+import re
 
+REGEX = '^(\w|.|_|-)+[@](\w|_|-|.)+[.]\w{2,3}$'
 
 @api_view(['POST', ])
 def email_check(request):
     try:
         email = request.data.get('email', None)
-        if email is None or not validate_email(email):
+        if email is None or not re.search(REGEX, email):
             return Response({'error': 'A valid email must be provided!'}, status=status.HTTP_400_BAD_REQUEST)
-        Account.objects.get(pk=email)
+        Account.objects.get(email=email)
     except ObjectDoesNotExist:
         return Response({'exists': False}, status=status.HTTP_404_NOT_FOUND)
 
@@ -27,7 +29,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        exclude = ('password', )
+        fields = ['email', 'password', 'password1']
 
     def create(self, validated_data):
         email = validated_data.get('email', None)

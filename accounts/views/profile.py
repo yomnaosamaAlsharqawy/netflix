@@ -4,7 +4,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework import status
-from accounts.models import Profile
+from accounts.models.profile import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -14,9 +14,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 @api_view(['POST', ])
-def profile_login(request, id):
+def profile_login(request, pk):
     pin_code = request.data.get('pin_code', None)
-    profile = Profile.objects.get(pk=id)
+    profile = Profile.objects.get(pk=pk)
 
     if pin_code != profile.pin_code:
         return Response(data={
