@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Movies, Casts, Genres, Moods
+from .models import *
 
 
 class CastSerializer(serializers.ModelSerializer):
@@ -20,6 +20,12 @@ class MoodsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = "__all__"
+
+
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movies
@@ -28,3 +34,15 @@ class MovieSerializer(serializers.ModelSerializer):
     casts = CastSerializer(read_only=True, many=True)
     genres = GenresSerializer(read_only=True, many=True)
     moods = MoodsSerializer(read_only=True, many=True)
+    country = CountrySerializer(read_only=True)
+
+
+class TvshowsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tvshows
+        fields = '__all__'
+
+    casts = CastSerializer(read_only=True, many=True)
+    genres = GenresSerializer(read_only=True, many=True)
+    moods = MoodsSerializer(read_only=True, many=True)
+    country = CountrySerializer(read_only=True)

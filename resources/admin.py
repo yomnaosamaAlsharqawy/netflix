@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+# Register your models here.
 from .models import *
 
 
@@ -17,3 +19,4 @@ admin.site.register(Genres)
 admin.site.register(Moods)
 admin.site.register(Seasons)
 admin.site.register(Episodes)
+admin.site.register(Country)

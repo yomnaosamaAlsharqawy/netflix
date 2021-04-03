@@ -8,3 +8,4 @@ class ResourcesConfig(AppConfig):
     def ready(self):
         from resources import signals
         post_migrate.connect(signals.init_genres, sender=self)
+        post_migrate.connect(signals.init_moods, sender=self)
