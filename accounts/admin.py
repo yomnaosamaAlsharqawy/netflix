@@ -1,7 +1,7 @@
 from django.contrib import admin
-from accounts.models.profile import Profile
-from accounts.models.plan import Plan
-from accounts.models.account import Account
+from accounts.models import Profile
+from accounts.submodels.plan import Plan
+from accounts.models import Account
 
 
 # Register your models here.

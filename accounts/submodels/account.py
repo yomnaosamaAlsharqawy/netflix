@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-from .plan import Plan
+from accounts.submodels.plan import Plan
+from django.contrib.auth.models import AbstractBaseUser
 # from accounts.models import PaymentMethod
 
 REGISTRATION_STEPS = [
@@ -11,9 +12,11 @@ REGISTRATION_STEPS = [
 ]
 
 
-class Account(User):
-    username = None
-    #email = models.EmailField(primary_key=True, unique=True, null=False, blank=False)
+class Account(AbstractBaseUser):
+    USERNAME_FIELD = 'email'
+
+    # username = None
+    email = models.EmailField(unique=True, null=False, blank=False)
     #password = models.CharField(max_length=100, null=False, blank=False)
     plan_id = models.ForeignKey(Plan, on_delete=models.SET_NULL, related_name='users', null=True)
     # payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True, blank=True)
@@ -22,3 +25,7 @@ class Account(User):
 
     def __str__(self):
         return self.email
+
+    @property
+    def profile(self):
+        return self.profile_set.all()

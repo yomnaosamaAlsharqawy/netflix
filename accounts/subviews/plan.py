@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework import serializers
-from accounts.models.plan import Plan
+from accounts.models import Plan
 
 
 class PlanSerializer(serializers.ModelSerializer):

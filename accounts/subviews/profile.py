@@ -4,7 +4,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework import status
-from accounts.models.profile import Profile
+from accounts.models import Profile, Account
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -33,8 +33,10 @@ def profile_login(request, pk):
 class ProfileList(ListAPIView):
     serializer_class = ProfileSerializer
 
-    def get_queryset(self, request, id):
-        return Profile.objects.filter(pk=id)
+    def get_queryset(self):
+        pk = request.user.id
+        print("***", pk)
+        return Account.objects.get(pk=pk).profiles
 
 
 class ProfileCreate(CreateAPIView):
@@ -42,7 +44,7 @@ class ProfileCreate(CreateAPIView):
     serializer_class = ProfileSerializer
 
 
-class ProfileRUD(RetrieveUpdateDestroyAPIView):
+class ProfileRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
