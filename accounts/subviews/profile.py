@@ -33,7 +33,6 @@ def profile_login(request, pk):
 class ProfileList(ListAPIView):
     serializer_class = ProfileSerializer
 
-    # not working yet
     def get_queryset(self):
         pk = request.user.id
         print("***", pk)
