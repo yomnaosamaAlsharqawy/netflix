@@ -10,9 +10,9 @@ urlpatterns = [
     path("<int:pk>/", views.AccountRetrieveUpdate.as_view()),
 
     # Profile Endpoints
-    path("profiles/<int:pk>/", views.ProfileList.as_view()),  # pk of parent account
-    path("<int:pk>/profiles/new/", views.ProfileCreate.as_view()),  # pk of parent account
-    path("<int:pk>/profiles/", views.ProfileRetrieveUpdateDestroy.as_view()),  # pk of parent account
+    path("<int:account_id>/profiles/", views.ProfileList.as_view()),  # pk of parent account
+    path("profiles/new/", views.ProfileCreate.as_view()),  # pk of parent account
+    path("profiles/<int:pk>/", views.ProfileRetrieveUpdateDestroy.as_view()),  # pk of parent account
     path("profiles/<int:pk>/login/", views.profile_login),
 
     # Plan Endpoints

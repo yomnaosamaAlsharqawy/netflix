@@ -10,13 +10,13 @@ from accounts.models import Profile, Account
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['account_id', 'id', 'name', 'image']
+        fields = ['id', 'name', 'image']
 
 
 @api_view(['POST', ])
-def profile_login(request, pk):
+def profile_login(request, profile_id):
     pin_code = request.data.get('pin_code', None)
-    profile = Profile.objects.get(pk=pk)
+    profile = Profile.objects.get(pk=profile_id)
 
     if pin_code != profile.pin_code:
         return Response(data={
@@ -32,9 +32,10 @@ def profile_login(request, pk):
 
 class ProfileList(ListAPIView):
     serializer_class = ProfileSerializer
+    lookup_url_kwarg = 'account_id'
 
     def get_queryset(self):
-        pk = request.user.id
+        pk = self.kwargs.get(self.lookup_url_kwarg)
         print("***", pk)
         return Account.objects.get(pk=pk).profiles
 
@@ -47,4 +48,3 @@ class ProfileCreate(CreateAPIView):
 class ProfileRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
