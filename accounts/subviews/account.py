@@ -1,11 +1,10 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework import serializers
 from rest_framework import status
 from accounts.models import Account
-from django.core.validators import validate_email
 import re
 
 REGEX = '^(\w|.|_|-)+[@](\w|_|-|.)+[.]\w{2,3}$'

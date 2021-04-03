@@ -8,25 +8,25 @@ VIDEO_QUALITY_CHOICES = [
 ]
 
 SCREEN_COUNT = [
-    ('One', '1'),
-    ('Two', '2'),
-    ('Three', '3')
+    ('1', 'One'),
+    ('2', 'Two'),
+    ('3', 'Three')
 ]
 
 
 class Plan(models.Model):
     title = models.CharField(max_length=20)
-    price = models.DecimalField(decimal_places=2, max_digits=3)
+    price = models.DecimalField(decimal_places=2, max_digits=10)
     video_quality = models.CharField(choices=VIDEO_QUALITY_CHOICES, default=VIDEO_QUALITY_CHOICES[0][0], max_length=10,
                                      null=False)
     # resolution = models.IntegerField(choices=(480, 720, 1080), default=480, null=False)
-    screen_count = models.IntegerField(choices=SCREEN_COUNT, default=SCREEN_COUNT[0][0], null=False)
+    screen_count = models.CharField(max_length=1, choices=SCREEN_COUNT, default=SCREEN_COUNT[0][0], null=False)
     supported_device = models.CharField(max_length=50)
     unlimited_content = models.BooleanField(default=False)
     cancel_anytime = models.BooleanField(default=False)
 
     def __str__(self):
-        return str({self.title})
+        return self.title
 
 
 # VideoQuality Model in the Database
