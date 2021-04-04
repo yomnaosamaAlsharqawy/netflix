@@ -34,6 +34,53 @@ class ListEpisodes(APIView, ):
             return Response({"detail": str(e)}, status=404)
 
 
+
+class ListByMoods(APIView, ):
+    def get(self, request, mood, type, *args, **kwargs):
+        try:
+            if type == "movie":
+                movies = Movies.objects.filter(moods__mood=mood)
+                serializer = MovieSerializer(instance=movies, many=True)
+            else:
+                tvshows = Tvshows.objects.filter(moods__mood=mood)
+                serializer = TvshowsSerializer(instance=tvshows, many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=404)
+
+
+class ListByCasts(APIView, ):
+    def get(self, request, cast, type, *args, **kwargs):
+        try:
+            if type == "movie":
+                movies = Movies.objects.filter(casts__name=cast)
+                serializer = MovieSerializer(instance=movies, many=True)
+            else:
+                tvshows = Tvshows.objects.filter(casts__name=cast)
+                serializer = TvshowsSerializer(instance=tvshows, many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=404)
+
+
+class RecentlyAdded(APIView, ):
+    def get(self,request,type,*args,**kwargs):
+        try:
+            if type == "movie":
+                movies = Movies.objects.order_by('year').reverse()[:20]
+                serializer = MovieSerializer(instance=movies, many=True)
+            else:
+                tvshows = Tvshows.objects.order_by('year').reverse()[:20]
+                serializer = TvshowsSerializer(instance=tvshows, many=True)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=404)
+        
+        
+
+
+
+
 @api_view(["POST", ])
 def add_country(request):
     serializer = CountrySerializer(data=request.data)
