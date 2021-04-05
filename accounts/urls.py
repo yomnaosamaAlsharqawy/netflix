@@ -6,7 +6,8 @@ urlpatterns = [
     # Account Endpoints
     path("check-email/", views.email_check),
     path("login/", obtain_auth_token),
-    path("register/", views.AccountCreate.as_view()),
+    path("register/step1/", views.AccountRegister.as_view()),
+    path("register/step3/", views.add_phone_number),
     path("<int:pk>/", views.AccountRetrieveUpdate.as_view()),
 
     # Profile Endpoints
