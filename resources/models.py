@@ -1,6 +1,16 @@
 from django.db import models
 
 
+
+# class Snippet(models.Model):
+#     created = models.DateTimeField(auto_now_add=True)
+#     title = models.CharField(max_length=100, blank=True, default='')
+#     code = models.TextField()
+#     linenos = models.BooleanField(default=False)
+#
+from rest_framework import mixins, generics
+
+
 class Casts(models.Model):
     name = models.CharField(max_length=25)
     role = models.CharField(max_length=25)
@@ -34,7 +44,7 @@ class Movies(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.ImageField(upload_to='movies/posters')
+    image = models.URLField() #models.ImageField(upload_to='movies/posters')
     year = models.DateField()
     likes = models.IntegerField(null=True)
     dislikes = models.IntegerField(null=True)
@@ -55,7 +65,7 @@ class Tvshows(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
     time = models.TimeField()
-    image = models.ImageField(upload_to='movies/posters')
+    image = models.URLField() #models.ImageField(upload_to='movies/posters')
     year = models.DateField()
     likes = models.IntegerField(null=True)
     dislikes = models.IntegerField(null=True)
@@ -88,3 +98,4 @@ class Episodes(models.Model):
 
     def __str__(self):
         return self.name
+
