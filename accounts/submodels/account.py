@@ -12,9 +12,6 @@ REGISTRATION_STEPS = [
 
 
 class Account(User):
-    # USERNAME_FIELD = 'username'
-
-    # username = models.EmailField(unique=True, null=False, blank=False)
     plan_id = models.ForeignKey(Plan, on_delete=models.SET_NULL, related_name='users', null=True)
     # payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True, blank=True)
     phone_number = models.CharField(max_length=25, null=True, blank=True)
@@ -22,7 +19,3 @@ class Account(User):
 
     def __str__(self):
         return self.username
-
-    @property
-    def profile(self):
-        return self.profile_set.all()

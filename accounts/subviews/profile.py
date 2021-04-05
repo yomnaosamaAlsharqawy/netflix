@@ -10,7 +10,7 @@ from accounts.models import Profile, Account
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['id', 'name', 'image']
+        fields = ['id', 'account_id', 'name', 'image']
 
 
 @api_view(['POST', ])
@@ -37,7 +37,9 @@ class ProfileList(ListAPIView):
     def get_queryset(self):
         pk = self.kwargs.get(self.lookup_url_kwarg)
         print("***", pk)
-        return Account.objects.get(pk=pk).profiles
+        profiles = Account.objects.get(pk=pk).profiles
+        print("***", profiles)
+        return profiles
 
 
 class ProfileCreate(CreateAPIView):

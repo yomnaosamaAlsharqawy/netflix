@@ -39,13 +39,12 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 
 class AccountCreateSerializer(DynamicFieldsModelSerializer):
-
+    password = serializers.CharField(write_only=True)
     password1 = serializers.CharField(write_only=True)
 
     class Meta:
         model = Account
         fields = ('id', 'username', 'password', 'password1')
-        write_only_fields = ('password', )
 
     def create(self, validated_data):
         username = validated_data.get('username', None)
