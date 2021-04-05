@@ -39,15 +39,16 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 
 
 class AccountCreateSerializer(DynamicFieldsModelSerializer):
-    password = serializers.CharField(write_only=True)
+
     password1 = serializers.CharField(write_only=True)
 
     class Meta:
         model = Account
-        fields = ('email', 'password', 'password1')
+        fields = ('id', 'username', 'password', 'password1')
+        write_only_fields = ('password', )
 
     def create(self, validated_data):
-        email = validated_data.get('email', None)
+        username = validated_data.get('username', None)
         password = validated_data.get('password', None)
         password1 = validated_data.get('password', None)
 
@@ -61,21 +62,26 @@ class AccountCreateSerializer(DynamicFieldsModelSerializer):
                 'password1': "Passwords don't match"
             })
 
-        if email is None:
+        if username is None or not re.search(REGEX, username):
             raise serializers.ValidationError({
                 'email': 'A valid email must be provided'
             })
 
-        return Account.objects.create(email=email, password=password)
+        user = Account(
+            username=username,
+            password=password
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
 
 
 class AccountUpdateSerializer(DynamicFieldsModelSerializer):
-    password = serializers.CharField(write_only=True)
-    password1 = serializers.CharField(write_only=True)
 
     class Meta:
         model = Account
-        exclude = ('registration_state', 'last_login')
+        fields = ('id', 'username', 'phone_number', 'plan_id', 'user_permissions', 'groups')
 
 
 class AccountCreate(CreateAPIView):
