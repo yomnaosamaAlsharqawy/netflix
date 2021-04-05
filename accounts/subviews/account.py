@@ -79,6 +79,13 @@ class AccountCreateStepOneSerializer(DynamicFieldsModelSerializer):
         return user
 
 
+class AccountUpdateSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('id', 'username', 'phone_number', 'plan_id', 'groups')
+        read_only_fields = ('plan_id', 'user_permissions', 'groups')
+
+
 @api_view(['POST', ])
 def add_phone_number(request):
 

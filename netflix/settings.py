@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'resources',
     'rest_framework',
     'rest_framework.authtoken',
@@ -132,3 +132,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = 'nfsysplus1234'
+EMAIL_HOST_USER = 'nfsysplus@gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
