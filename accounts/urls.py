@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     # Account Endpoints
-    path("check-email/", views.email_check),
+    path("user-check/", views.user_check),
     path("login/", obtain_auth_token),
     path("register/step1/", views.AccountRegister.as_view()),
     path("register/step3/", views.add_phone_number),
