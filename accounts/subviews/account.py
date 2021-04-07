@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework import status
-from accounts.models import Account
+from accounts.models import Account, Plan
 from accounts.serializers import AccountRegisterSerializer, AccountUpdateSerializer
 from accounts.helpers import validate_email, validate_phone_number
 
@@ -30,7 +30,54 @@ class AccountRegister(CreateAPIView):
     serializer_class = AccountRegisterSerializer
 
 
-@api_view(['POST', ])
+@api_view(['PATCH', ])
+def add_plan(request):
+    id = request.data.get('id', None)
+    plan_id = request.data.get('plan_id', None)
+
+    if id is None or id == '':
+        return Response({
+            'id': 'User id must be provided!'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    if plan_id is None or plan_id == '':
+        return Response({
+            'plan_id': 'Plan id must be provided!'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = Account.objects.get(pk=id)
+    except ValueError:
+        return Response({
+            'id': 'User id is not valid'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    except ObjectDoesNotExist:
+        return Response({
+            'error': 'User not found!'
+        }, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        plan = Plan.objects.get(pk=plan_id)
+    except ValueError:
+        return Response({
+            'plan_id': 'Plan id is not valid!'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    except ObjectDoesNotExist:
+        return Response({
+            'plan': 'Plan does not exist!'
+        }, status=status.HTTP_404_NOT_FOUND)
+
+    user.plan_id = plan
+    user.registration_stage = 3  # -> 'step3'
+    user.save()
+
+    return Response({
+        'plan_id': plan.id,
+        'registration_stage': user.registration_stage
+    }, status=status.HTTP_200_OK)
+
+
+@api_view(['PATCH', ])
 def add_phone_number(request):
     id = request.data.get('id', None)
     phone_number = request.data.get('phone_number', None)
@@ -53,6 +100,10 @@ def add_phone_number(request):
 
     try:
         user = Account.objects.get(pk=id)
+    except ValueError:
+        return Response({
+            'id': 'User id is not valid'
+        }, status=status.HTTP_400_BAD_REQUEST)
     except ObjectDoesNotExist:
         return Response({
             'error': 'User not found'
@@ -68,7 +119,10 @@ def add_phone_number(request):
     user.registration_stage = 4  # -> 'completed'
     user.save()
 
-    return Response({'message': 'Phone number Added Successfully'})
+    return Response({
+        'phone_number': user.phone_number,
+        'registration_stage': user.registration_stage
+    }, status=status.HTTP_200_OK)
 
 
 class AccountRetrieveUpdate(RetrieveUpdateAPIView):

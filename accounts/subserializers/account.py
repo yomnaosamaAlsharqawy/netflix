@@ -31,13 +31,6 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
                 self.fields.pop(exclude_name)
 
 
-# class AccountRegisterSerializer(DynamicFieldsModelSerializer):
-#     class Meta:
-#         model = Account
-#         fields = ('id', 'username', 'phone_number', 'plan_id', 'groups')
-#         read_only_fields = ('plan_id', 'groups')
-
-
 class AccountRegisterSerializer(DynamicFieldsModelSerializer):
     password = serializers.CharField(write_only=True)
     password1 = serializers.CharField(write_only=True)
