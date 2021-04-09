@@ -62,7 +62,6 @@ class AccountRegisterSerializer(DynamicFieldsModelSerializer):
 
         user = Account(
             username=username,
-            password=password,
             registration_state=2  # -> 'step2'
         )
         user.set_password(validated_data['password'])

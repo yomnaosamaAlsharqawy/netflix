@@ -1,4 +1,3 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import serializers
@@ -8,9 +7,11 @@ from accounts.models import Profile, Account
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    pin_code = serializers.CharField(write_only=True, allow_blank=True)
+
     class Meta:
         model = Profile
-        fields = ['id', 'account_id', 'name', 'image']
+        fields = ['id', 'account_id', 'name', 'pin_code', 'image']
 
 
 @api_view(['POST', ])
