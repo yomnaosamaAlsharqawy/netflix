@@ -3,7 +3,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework import status
-from accounts.models import Profile, Account
+from accounts.models import Profile, ProfileImage, Account
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -11,7 +11,19 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'account_id', 'name', 'pin_code', 'image']
+        fields = ['id', 'account_id', 'name', 'image_url', 'pin_code']
+
+
+class ProfileImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfileImage
+        fields = ['id', 'name', 'image_url']
+
+
+class ProfileImageList(ListAPIView):
+    queryset = ProfileImage.objects.all()
+    serializer_class = ProfileImageSerializer
+    lookup_field = 'pk'
 
 
 @api_view(['POST', ])
