@@ -65,6 +65,7 @@ class TvshowsdetailedSerializer(serializers.ModelSerializer):
     seasons = SeasonsSerializer(read_only=True, many=True)
     genres = GenresSerializer(read_only=True, many=True)
     casts = CastSerializer(read_only=True, many=True)
+    country = CountrySerializer(read_only=True)
 
     class Meta:
         model = Tvshows

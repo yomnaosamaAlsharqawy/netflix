@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'resources',
     'homepage',
+    'history',
+    'mylist',
     'accounts.apps.AccountsConfig',
     'rest_framework',
     'rest_framework.authtoken',
