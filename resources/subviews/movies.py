@@ -2,10 +2,9 @@ import json
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status, generics
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import status
 
-from resources.models import Tvshows, Casts, Moods, Genres, Movies
+from resources.models import Casts, Moods, Genres, Movies, Country
 from resources.serializers import MovieSerializer
 
 
@@ -23,8 +22,9 @@ class MovieController(APIView, ):
             data = request.data
             moods = json.loads(data['moods'])
             genres = json.loads(data['genres'])
+            country = Country.objects.get(name=json.loads(request.data['country'])['name'])
             movie = Movies(name=data['name'], description=data['description'], year=data['year'], age=data['age'],
-                           image=data['image'], trailer=data['trailer'], time=data['time'], url=data['url'])
+                           image=data['image'], trailer=data['trailer'], time=data['time'], url=data['url'], country=country)
             movie.clean()
             movie.save()
             cast_data = json.loads(data['casts'])
@@ -44,3 +44,37 @@ class MovieController(APIView, ):
             }, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({"detail": str(e)}, status=404)
+
+    def put(self, request, *args, **kwargs):
+        data_cast = json.loads(request.data['casts'])
+        data_genre = json.loads(request.data['genres'])
+        data_mood = json.loads(request.data['moods'])
+        country = Country.objects.get(name=json.loads(request.data['country'])['name'])
+        movie = Movies.objects.get(pk=request.data['id'])
+        movie.genres.clear()
+        movie.moods.clear()
+        movie.casts.clear()
+        movie.country = country
+        for i in data_cast:
+            cast = Casts.objects.create(name=i['name'], role=i["role"])
+            movie.casts.add(cast)
+
+        for k in data_genre:
+            genre = Genres.objects.filter(genre=k['genre']).first()
+            movie.genres.add(genre)
+
+        for j in data_mood:
+            mood = Moods.objects.filter(mood=j["mood"]).first()
+            movie.moods.add(mood)
+
+        serializer = MovieSerializer(movie, data=request.data)
+        if serializer.is_valid():
+            movie.save()
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs):
+        movie = Movies.objects.get(pk=request.GET['id'])
+        movie.delete()
+        return Response({"success": "deleted successfully"})

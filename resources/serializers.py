@@ -27,6 +27,14 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    moods = MoodsSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Movies
+        fields = ['id', 'name', 'image', 'views', 'age', 'time', 'moods']
+
+
+class MovieInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movies
         fields = '__all__'
@@ -37,12 +45,33 @@ class MovieSerializer(serializers.ModelSerializer):
     country = CountrySerializer(read_only=True)
 
 
-class TvshowsSerializer(serializers.ModelSerializer):
+class SeasonsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tvshows
+        model = Seasons
         fields = '__all__'
 
-    casts = CastSerializer(read_only=True, many=True)
-    genres = GenresSerializer(read_only=True, many=True)
+
+class TvshowsSerializer(serializers.ModelSerializer):
     moods = MoodsSerializer(read_only=True, many=True)
-    country = CountrySerializer(read_only=True)
+    seasons = SeasonsSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Tvshows
+        fields = ['id', 'name', 'image', 'views', 'age', 'moods', 'seasons']
+
+
+class TvshowsdetailedSerializer(serializers.ModelSerializer):
+    moods = MoodsSerializer(read_only=True, many=True)
+    seasons = SeasonsSerializer(read_only=True, many=True)
+    genres = GenresSerializer(read_only=True, many=True)
+    casts = CastSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Tvshows
+        fields = "__all__"
+
+
+class EpisodesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Episodes
+        fields = "__all__"
