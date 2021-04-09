@@ -70,9 +70,9 @@ class AccountRegisterSerializer(DynamicFieldsModelSerializer):
         return user
 
 
-class AccountUpdateSerializer(DynamicFieldsModelSerializer):
+class AccountRetrieveUpdateSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Account
-        fields = ('id', 'username', 'phone_number', 'plan_id', 'groups')
+        fields = ('id', 'username', 'phone_number', 'plan_id', 'groups', 'registration_state')
         read_only_fields = ('id', 'plan_id', 'groups')
 
