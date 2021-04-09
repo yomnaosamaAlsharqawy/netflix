@@ -1,28 +1,16 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from .subviews.tvshows import *
 from .subviews.Episodes import *
 from .subviews.likes_dislikes import *
 from .subviews.search import *
 from .subviews.movies import MovieController
 
-from .models import Movies, Tvshows, Episodes, Casts, Country
-from rest_framework import status, generics
-from rest_framework.decorators import api_view, permission_classes
-from .serializers import MovieSerializer, CountrySerializer, CastSerializer, EpisodesSerializer, TvshowsSerializer, \
-    GenresSerializer
+from .models import Movies, Tvshows, Casts, Country
+from rest_framework import status
+from rest_framework.decorators import api_view
+from .serializers import *
 
 
-class ListEpisodes(APIView, ):
-    def get(self, request, index, *args, **kwargs):
-        try:
-            episodes = Episodes.objects.filter(season__season=index)
-            serializer = EpisodesSerializer(instance=episodes, many=True)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"detail": str(e)}, status=404)
-
-
+# end point to add new country
 @api_view(["POST", ])
 def add_country(request):
     serializer = CountrySerializer(data=request.data)
@@ -39,6 +27,7 @@ def add_country(request):
     }, status=status.HTTP_400_BAD_REQUEST)
 
 
+# select all country from model
 @api_view(["GET", ])
 def show_all_countries(request):
     country = Country.objects.all()
@@ -46,6 +35,7 @@ def show_all_countries(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+# show all casts in database
 @api_view(["GET", ])
 def show_all_casts(request):
     casts = Casts.objects.all()
@@ -69,6 +59,7 @@ def create_cast(request):
     }, status=status.HTTP_400_BAD_REQUEST)
 
 
+# top ten of movies created in specific country
 @api_view(["GET", ])
 def top_ten_movies(request, country):
     movies = Movies.objects.order_by('views').reverse().filter(country__name=country)[:10]
@@ -76,6 +67,7 @@ def top_ten_movies(request, country):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+# top ten of tv-show created in specific country
 @api_view(["GET", ])
 def top_ten_tv_show(request, country):
     tv_show = Tvshows.objects.order_by('views').reverse().filter(country__name=country)[:10]
@@ -83,6 +75,7 @@ def top_ten_tv_show(request, country):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+# filter in movies or tv-shows by [mood or genres or country or cast name]
 class Filters(APIView):
     def get(self, request, *args, **kwargs):
         options_dict = {'mood': 'moods__mood', 'genre': 'genres__genre', 'cast': 'casts__name',
@@ -104,6 +97,7 @@ class Filters(APIView):
             return Response({"detail": str(e)}, status=404)
 
 
+# list all genres from model
 @api_view(["GET"])
 def show_all_genres(request):
     genres = Genres.objects.all()
