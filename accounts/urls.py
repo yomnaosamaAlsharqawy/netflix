@@ -15,7 +15,8 @@ urlpatterns = [
     path("<int:account_id>/profiles/", views.ProfileList.as_view()),
     path("profiles/new/", views.ProfileCreate.as_view()),
     path("profiles/<int:pk>/", views.ProfileRetrieveUpdateDestroy.as_view()),
-    path("profiles/<int:pk>/login/", views.profile_login),
+    path("profiles/<int:profile_id>/login/", views.profile_login),
+    path("profiles/images/", views.ProfileImageList.as_view()),
 
     # Plan Endpoints
     path("plans/", views.PlanList.as_view()),

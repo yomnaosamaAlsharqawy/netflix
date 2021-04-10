@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework import status
 from accounts.models import Account, Plan
-from accounts.serializers import AccountRegisterSerializer, AccountUpdateSerializer
+from accounts.serializers import AccountRegisterSerializer, AccountRetrieveUpdateSerializer
 from accounts.helpers import validate_email, validate_phone_number
 
 
@@ -90,7 +90,7 @@ def add_phone_number(request):
 
     if phone_number is None or phone_number == '':
         return Response({
-            'phone number': 'Phone number must be provided'
+            'phone_number': 'Phone number must be provided'
         }, status=status.HTTP_400_BAD_REQUEST)
 
     if country_code is None or country_code == '':
@@ -127,6 +127,6 @@ def add_phone_number(request):
 
 class AccountRetrieveUpdate(RetrieveUpdateAPIView):
     queryset = Account.objects.all()
-    serializer_class = AccountUpdateSerializer
+    serializer_class = AccountRetrieveUpdateSerializer
 
 
