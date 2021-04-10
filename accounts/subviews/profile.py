@@ -11,7 +11,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'account_id', 'name', 'image_url', 'pin_code']
+        fields = ['id', 'account_id', 'name', 'image_id', 'image_url', 'pin_code']
+        read_only_fields = ['image_url', ]
 
 
 class ProfileImageSerializer(serializers.ModelSerializer):
