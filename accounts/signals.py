@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Account
+from .models import Account, Plan
 from django.core.mail import send_mail
 
 
@@ -26,3 +26,16 @@ ITI Netflix Plus Team"
             ],
             fail_silently=False,
         )
+
+
+plans = [
+    (1, 'Basic Plan', 120, 'Good', '1', 'PC', False, True),
+    (2, 'Standard Plan', 165, 'Better', '2', 'PC', False, True),
+    (3, 'Premium Plan', 200, 'Best', '3', 'PC', True, True),
+]
+
+
+def init_plans(sender, *args, **kwargs):
+    for plan in plans:
+        Plan(id=plan[0], title=plan[1], price=plan[2], video_quality=plan[3], screen_count=plan[4],
+             supported_device=plan[5], unlimited_content=plan[6], cancel_anytime=plan[7]).save()
