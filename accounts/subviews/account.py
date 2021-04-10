@@ -90,7 +90,7 @@ def add_phone_number(request):
 
     if phone_number is None or phone_number == '':
         return Response({
-            'phone number': 'Phone number must be provided'
+            'phone_number': 'Phone number must be provided'
         }, status=status.HTTP_400_BAD_REQUEST)
 
     if country_code is None or country_code == '':
