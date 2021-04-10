@@ -8,3 +8,4 @@ class AccountsConfig(AppConfig):
     def ready(self):
         from . import signals
         post_migrate.connect(signals.init_plans, sender=self)
+        post_migrate.connect(signals.init_profile_images, sender=self)
