@@ -2,9 +2,15 @@ from django.db import models
 
 
 VIDEO_QUALITY_CHOICES = [
-    ('Good', '480'),
-    ('Better', '720'),
-    ('Best', '1080'),
+    ('Good', 'Good'),
+    ('Better', 'Better'),
+    ('Best', 'Best'),
+]
+
+RES_CHOICES = [
+    ("480px", "480px"),
+    ("1080px", "1080px"),
+    ("4k+HDR", "4k+HDR")
 ]
 
 SCREEN_COUNT = [
@@ -19,11 +25,9 @@ class Plan(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10)
     video_quality = models.CharField(choices=VIDEO_QUALITY_CHOICES, default=VIDEO_QUALITY_CHOICES[0][0], max_length=10,
                                      null=False)
-    # resolution = models.IntegerField(choices=(480, 720, 1080), default=480, null=False)
+    resolution = models.CharField(max_length=50, choices=RES_CHOICES, default=RES_CHOICES[0][0], null=False)
     screen_count = models.CharField(max_length=1, choices=SCREEN_COUNT, default=SCREEN_COUNT[0][0], null=False)
     supported_device = models.CharField(max_length=50)
-    unlimited_content = models.BooleanField(default=False)
-    cancel_anytime = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
