@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Casts(models.Model):
+    class Meta:
+        verbose_name = "Cast"
+        verbose_name_plural = "Casts"
 
     name = models.CharField(max_length=25)
     role = models.CharField(max_length=25)
@@ -11,6 +14,9 @@ class Casts(models.Model):
 
 
 class Genres(models.Model):
+    class Meta:
+        verbose_name = "Genre"
+        verbose_name_plural = "Genres"
 
     genre = models.CharField(max_length=25)
 
@@ -19,6 +25,9 @@ class Genres(models.Model):
 
 
 class Moods(models.Model):
+    class Meta:
+        verbose_name = "Mood"
+        verbose_name_plural = "Moods"
 
     mood = models.CharField(max_length=25)
 
@@ -27,6 +36,9 @@ class Moods(models.Model):
 
 
 class Country(models.Model):
+    class Meta:
+        verbose_name = "Country"
+        verbose_name_plural = "Countries"
 
     name = models.CharField(max_length=20)
 
@@ -39,10 +51,14 @@ class Country(models.Model):
 
 
 class Movies(models.Model):
+    class Meta:
+        verbose_name = "Movie"
+        verbose_name_plural = "Movies"
 
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
-    time = models.IntegerField()
+    type = models.CharField(default='movie', max_length=20)
+    time = models.CharField(max_length=20)
     image = models.URLField()
     year = models.DateField()
     likes = models.IntegerField(default=0)
@@ -60,9 +76,13 @@ class Movies(models.Model):
 
 
 class Tvshows(models.Model):
+    class Meta:
+        verbose_name = "Tvshow"
+        verbose_name_plural = "Tvshows"
 
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
+    type = models.CharField(default='tv-show', max_length=20)
     image = models.URLField()
     year = models.DateField()
     likes = models.IntegerField(default=0)
@@ -83,6 +103,9 @@ class Tvshows(models.Model):
 
 
 class Seasons(models.Model):
+    class Meta:
+        verbose_name = "Season"
+        verbose_name_plural = "Seasons"
 
     season = models.IntegerField()
     tv_show = models.ForeignKey(Tvshows, on_delete=models.SET_NULL, null=True)
@@ -99,9 +122,13 @@ class Seasons(models.Model):
 
 
 class Episodes(models.Model):
+    class Meta:
+        verbose_name = "Episode"
+        verbose_name_plural = "Episodes"
+
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
-    time = models.IntegerField()
+    time = models.CharField(max_length=20)
     image = models.URLField()
     url = models.URLField()
     season = models.ForeignKey(Seasons, on_delete=models.SET_NULL, null=True)

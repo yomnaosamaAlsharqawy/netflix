@@ -28,7 +28,7 @@ class TvShowsController(APIView, ):
             data = request.data
             moods = json.loads(data['moods'])
             genres = json.loads(data['genres'])
-            country = Country.objects.get(name=json.loads(request.data['country'])['name'])
+            country = Country.objects.get(name=request.data['country'])
             tv_show = Tvshows(name=data['name'], description=data['description'], year=data['year'], age=data['age'],
                               image=data['image'], trailer=data['trailer'], country=country)
             tv_show.clean()

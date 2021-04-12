@@ -32,12 +32,12 @@ class MoreInfo(APIView):
         data = request.GET
         print(data.get('name'))
         try:
-            if data.get('season'):
-                tv_show = Tvshows.objects.filter(id=int(data.get('id')), name=data.get('name'))
-                serializer = TvshowsdetailedSerializer(instance=tv_show, many=True)
+            if data.get('type') == 'tv_show':
+                tv_show = Tvshows.objects.get(id=int(data.get('id')))
+                serializer = TvshowsdetailedSerializer(instance=tv_show)
             else:
-                movie = Movies.objects.filter(id=data.get('id'), name=data.get('name'))
-                serializer = MovieInfoSerializer(instance=movie, many=True)
+                movie = Movies.objects.get(id=data.get('id'))
+                serializer = MovieInfoSerializer(instance=movie)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"detail": str(e)}, status=404)
