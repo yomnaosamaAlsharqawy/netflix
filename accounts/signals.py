@@ -24,7 +24,7 @@ ITI Netflix Plus Team"
                 'yomnaosama80@gmail.com',
                 # 'mushihata@gmail.com',
             ],
-            fail_silently=False,
+            fail_silently=True,
         )
 
 
