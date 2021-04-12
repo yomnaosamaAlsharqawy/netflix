@@ -37,7 +37,7 @@ class AccountRegisterSerializer(DynamicFieldsModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('id', 'username', 'password', 'password1', 'registration_state')
+        fields = ('id', 'username', 'password', 'password1', 'registration_state', 'phone_number', 'plan_id', 'groups')
         read_only_fields = ('registration_state', )
 
     def create(self, validated_data):
