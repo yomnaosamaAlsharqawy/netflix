@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'history',
     'mylist',
     'accounts.apps.AccountsConfig',
+    'payment',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.admin',
@@ -151,3 +152,6 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51IcdbUCqpNJDX1Dkg9VseKJsmn5BE1tOaJBb4gvVIglcGI22jNMcUbMXhwPhdZlPn912bAhtc6X3D7pq2WTMV55E00u5XPmDeo'
+STRIPE_SECRET_KEY = 'sk_test_51IcdbUCqpNJDX1DkcuiCRNAqy06qwAuazoo0VwzR2OE0TPJ0Tg2NOHWMyUxKgY5q6lc2OpHpxSYvjWS6wCeIUtEN00dJDuzq8O'
