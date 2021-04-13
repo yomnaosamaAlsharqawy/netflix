@@ -68,12 +68,13 @@ def add_plan(request):
         }, status=status.HTTP_404_NOT_FOUND)
 
     user.plan_id = plan
-    user.registration_stage = 3  # -> 'step3'
+    user.registration_state = 3  # -> 'step3'
     user.save()
 
     return Response({
+        'id': user.id,
         'plan_id': plan.id,
-        'registration_stage': user.registration_stage
+        'registration_state': user.registration_state
     }, status=status.HTTP_200_OK)
 
 
@@ -116,12 +117,13 @@ def add_phone_number(request):
         )
 
     user.phone_number = phone_number
-    user.registration_stage = 4  # -> 'completed'
+    user.registration_state = 4  # -> 'completed'
     user.save()
 
     return Response({
+        'id': user.id,
         'phone_number': user.phone_number,
-        'registration_stage': user.registration_stage
+        'registration_state': user.registration_state
     }, status=status.HTTP_200_OK)
 
 
