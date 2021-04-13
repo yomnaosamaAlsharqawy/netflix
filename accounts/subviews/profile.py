@@ -7,7 +7,7 @@ from accounts.models import Profile, ProfileImage, Account
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    pin_code = serializers.CharField(write_only=True, allow_blank=True)
+    # pin_code = serializers.CharField(write_only=True, allow_blank=True)
 
     class Meta:
         model = Profile
