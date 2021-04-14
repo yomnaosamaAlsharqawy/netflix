@@ -1,4 +1,6 @@
 import random
+
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -10,6 +12,8 @@ from resources.serializers import MovieSerializer, TvshowsSerializer, Tvshowsdet
 
 
 class Search(APIView, ):
+    permission_classes = [IsAuthenticated, ]
+
     def get(self, request, *args, **kwargs):
         try:
             data = request.GET
@@ -28,6 +32,7 @@ class Search(APIView, ):
 
 
 class MoreInfo(APIView):
+
     def get(self, request, *args, **kwargs):
         data = request.GET
         print(data.get('name'))

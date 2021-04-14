@@ -29,16 +29,16 @@ ITI Netflix Plus Team"
 
 
 plans = [
-    (1, 'Basic Plan', 120, 'Good', '1', 'PC', False, True),
-    (2, 'Standard Plan', 165, 'Better', '2', 'PC', False, True),
-    (3, 'Premium Plan', 200, 'Best', '3', 'PC', True, True),
+    (1, 'Basic', 120, 'Good', '480px', '1', 'all'),
+    (2, 'Standard', 165, 'Better', '1080px', '2', 'all'),
+    (3, 'Premium', 200, 'Best', '4k+HDR', '3', 'all'),
 ]
 
 
 def init_plans(sender, *args, **kwargs):
     for plan in plans:
-        Plan(id=plan[0], title=plan[1], price=plan[2], video_quality=plan[3], screen_count=plan[4],
-             supported_device=plan[5], unlimited_content=plan[6], cancel_anytime=plan[7]).save()
+        Plan(id=plan[0], title=plan[1], price=plan[2],video_quality=plan[3], resolution=plan[4], screen_count=plan[5],
+             supported_device=plan[6]).save()
 
 
 images = [

@@ -79,6 +79,8 @@ def top_ten_tv_show(request, country):
 
 # filter in movies or tv-shows by [mood or genres or country or cast name]
 class Filters(APIView):
+    permission_classes = [IsAuthenticated, ]
+
     def get(self, request, *args, **kwargs):
         options_dict = {'mood': 'moods__mood', 'genre': 'genres__genre', 'cast': 'casts__name',
                         'country': 'country__name'}
@@ -109,7 +111,7 @@ def show_all_genres(request):
 
 class Suggestion(APIView):
     # permission_classes = [IsAuthenticated, ]
-    def get(self,request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         try:
             if request.GET['type'] == 'movie':
                 movies = Movies.objects.filter(genres__genre=request.GET['genre']).exclude(id=request.GET['id'])
