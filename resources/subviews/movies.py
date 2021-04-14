@@ -1,5 +1,6 @@
 import json
 
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -9,6 +10,7 @@ from resources.serializers import MovieSerializer
 
 
 class MovieController(APIView, ):
+    permission_classes = [IsAuthenticated, ]
     def get(self, request, *args, **kwargs):
         try:
             movies = Movies.objects.all()

@@ -32,6 +32,7 @@ class Search(APIView, ):
 
 
 class MoreInfo(APIView):
+    permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         data = request.GET
