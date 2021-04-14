@@ -75,7 +75,7 @@ def add_plan(request):
         'id': user.id,
         'username': user.username,
         'plan_id': plan.id,
-        'registration_stage': user.registration_state,
+        'registration_state': user.registration_state
     }, status=status.HTTP_200_OK)
 
 
@@ -118,15 +118,15 @@ def add_phone_number(request):
         )
 
     user.phone_number = phone_number
-    user.registration_stage = 4  # -> 'completed'
+    user.registration_state = 4  # -> 'completed'
     user.save()
 
     return Response({
         'id': user.id,
         'username': user.username,
         'plan_id': user.plan_id,
-        'registration_stage': user.registration_stage,
-        'groups': user.groups
+        'phone_number': user.phone_number,
+        'registration_state': user.registration_state
     }, status=status.HTTP_200_OK)
 
 
