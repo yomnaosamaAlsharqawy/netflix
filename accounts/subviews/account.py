@@ -124,7 +124,7 @@ def add_phone_number(request):
     return Response({
         'id': user.id,
         'username': user.username,
-        'plan_id': user.plan_id,
+        'plan_id': user.plan_id.id,
         'phone_number': user.phone_number,
         'registration_state': user.registration_state
     }, status=status.HTTP_200_OK)
