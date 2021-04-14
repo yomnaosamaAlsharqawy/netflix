@@ -34,3 +34,15 @@ class EpisodeController(APIView):
 
         except Exception as e:
             return Response({"detail": str(e)}, status=404)
+
+
+class OneEpisode(APIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            episode = Episodes.objects.get(pk=request.GET['episode'])
+            serializer = EpisodesSerializer(instance=episode)
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=404)
