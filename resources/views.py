@@ -110,7 +110,8 @@ def show_all_genres(request):
 
 
 class Suggestion(APIView):
-    # permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, ]
+
     def get(self, request, *args, **kwargs):
         try:
             if request.GET['type'] == 'movie':

@@ -1,4 +1,6 @@
 import random
+
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from resources.models import Tvshows, Movies
@@ -8,6 +10,7 @@ from resources.serializers import MovieSerializer, TvshowsSerializer
 
 
 class HomePageGenerator(APIView, ):
+    permission_classes = [IsAuthenticated, ]
     def get(self, request, *args, **kwargs):
         # options_dict = {'mood': 'moods__mood', 'genre': 'genres__genre', 'country': 'country__name'}
         try:
