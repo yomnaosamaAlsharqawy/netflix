@@ -31,7 +31,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movies
-        fields = ['id', 'name', 'image', 'trailer', 'views', 'age', 'time', 'moods']
+        fields = ['id', 'name', 'type', 'image', 'trailer', 'views', 'age', 'time', 'moods', 'description', 'year']
 
 
 class MovieInfoSerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class TvshowsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tvshows
-        fields = ['id', 'name', 'trailer', 'image', 'views', 'age', 'moods', 'seasons']
+        fields = ['id', 'name', 'trailer', 'type', 'image', 'views', 'age', 'moods', 'seasons', 'description', 'year']
 
 
 class TvshowsdetailedSerializer(serializers.ModelSerializer):

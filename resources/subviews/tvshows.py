@@ -1,5 +1,6 @@
 import json
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -15,6 +16,7 @@ from resources.serializers import TvshowsSerializer, TvshowsdetailedSerializer
 
 
 class TvShowsController(APIView, ):
+    permission_classes = [IsAuthenticated, ]
     def get(self, request, *args, **kwargs):
         try:
             tv_shows = Tvshows.objects.all()
@@ -28,7 +30,7 @@ class TvShowsController(APIView, ):
             data = request.data
             moods = json.loads(data['moods'])
             genres = json.loads(data['genres'])
-            country = Country.objects.get(name=json.loads(request.data['country'])['name'])
+            country = Country.objects.get(name=request.data['country'])
             tv_show = Tvshows(name=data['name'], description=data['description'], year=data['year'], age=data['age'],
                               image=data['image'], trailer=data['trailer'], country=country)
             tv_show.clean()

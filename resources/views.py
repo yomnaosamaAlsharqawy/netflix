@@ -1,3 +1,5 @@
+from rest_framework.permissions import IsAuthenticated
+
 from .subviews.tvshows import *
 from .subviews.Episodes import *
 from .subviews.likes_dislikes import *
@@ -5,7 +7,7 @@ from .subviews.search import *
 from .subviews.movies import MovieController
 
 from .models import Movies, Tvshows, Casts, Country
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.decorators import api_view
 from .serializers import *
 
@@ -77,6 +79,8 @@ def top_ten_tv_show(request, country):
 
 # filter in movies or tv-shows by [mood or genres or country or cast name]
 class Filters(APIView):
+    permission_classes = [IsAuthenticated, ]
+
     def get(self, request, *args, **kwargs):
         options_dict = {'mood': 'moods__mood', 'genre': 'genres__genre', 'cast': 'casts__name',
                         'country': 'country__name'}
@@ -103,3 +107,18 @@ def show_all_genres(request):
     genres = Genres.objects.all()
     serializer = GenresSerializer(instance=genres, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class Suggestion(APIView):
+    # permission_classes = [IsAuthenticated, ]
+    def get(self, request, *args, **kwargs):
+        try:
+            if request.GET['type'] == 'movie':
+                movies = Movies.objects.filter(genres__genre=request.GET['genre']).exclude(id=request.GET['id'])
+                serializer = MovieSerializer(instance=movies, many=True)
+            else:
+                tv_shows = Tvshows.objects.filter(genres__genre=request.GET['genre']).exclude(id=request.GET['id'])
+                serializer = TvshowsSerializer(instance=tv_shows, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=404)
