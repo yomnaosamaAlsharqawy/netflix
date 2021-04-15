@@ -134,4 +134,4 @@ class Episodes(models.Model):
     season = models.ForeignKey(Seasons, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.name + str(self.season.season)
+        return self.season.tv_show.name +" - "+ self.name + str(self.season.season)
