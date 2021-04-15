@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,6 +11,7 @@ from mylist.serializers import *
 
 class ListController(APIView, ):
     permission_classes = [IsAuthenticated, ]
+
     def get(self, request, *args, **kwargs):
         try:
             list = List.objects.filter(profile__id=request.GET['id'])
@@ -21,11 +23,16 @@ class ListController(APIView, ):
     def post(self, request, *args, **kwargs):
         try:
             data = request.data
-            list = List(profile_id=data['profile'], movie_id=data.get('movie', None),
-                        tv_show_id=data.get('tv_show', None))
-            list.clean()
-            list.save()
-            return Response({"detail": "has been added successfully!"})
+            mylist = List.objects.filter(profile_id=data['profile']).filter(
+                Q(movie_id=data.get('movie', None)) | Q(tv_show_id=data.get('tv_show', None)))
+            if mylist:
+                return Response({"detail": "has been added successfully!"})
+            else:
+                list = List(profile_id=data['profile'], movie_id=data.get('movie', None),
+                            tv_show_id=data.get('tv_show', None))
+                list.clean()
+                list.save()
+                return Response({"detail": "has been added successfully!"})
         except Exception as e:
             return Response({"detail": str(e)}, status=404)
 
