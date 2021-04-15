@@ -23,16 +23,16 @@ class ListController(APIView, ):
     def post(self, request, *args, **kwargs):
         try:
             data = request.data
-            mylist = List.objects.filter(profile_id=data['profile']).filter(
-                Q(movie_id=data.get('movie', None)) | Q(tv_show_id=data.get('tv_show', None)))
-            if mylist:
-                return Response({"detail": "has been added successfully!"})
-            else:
-                list = List(profile_id=data['profile'], movie_id=data.get('movie', None),
-                            tv_show_id=data.get('tv_show', None))
-                list.clean()
-                list.save()
-                return Response({"detail": "has been added successfully!"})
+            # mylist = List.objects.filter(profile_id=data['profile']).filter(
+            #     Q(movie_id=data.get('movie', None)) | Q(tv_show_id=data.get('tv_show', None)))
+            # if mylist:
+            #     return Response({"detail": "has been added successfully!"})
+            # else:
+            list = List(profile_id=data['profile'], movie_id=data.get('movie', None),
+                        tv_show_id=data.get('tv_show', None))
+            list.clean()
+            list.save()
+            return Response({"detail": "has been added successfully!"})
         except Exception as e:
             return Response({"detail": str(e)}, status=404)
 
