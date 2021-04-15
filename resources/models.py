@@ -82,7 +82,7 @@ class Tvshows(models.Model):
 
     name = models.CharField(max_length=25)
     description = models.TextField(max_length=200)
-    type = models.CharField(default='tv-show', max_length=20)
+    type = models.CharField(default='tv_show', max_length=20)
     image = models.URLField()
     year = models.DateField()
     likes = models.IntegerField(default=0)
