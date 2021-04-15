@@ -140,8 +140,8 @@ MEDIA_URL = '/media/'
 CORS_ORIGIN_ALLOW_ALL = True
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = 'nfsysplus1234'
-EMAIL_HOST_USER = 'nfsysplus@gmail.com'
+EMAIL_HOST_PASSWORD = 'nfmailsystem123'
+EMAIL_HOST_USER = 'nfmailsystem@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

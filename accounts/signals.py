@@ -17,12 +17,12 @@ ITI Netflix Plus Team"
         send_mail(
             'ITI Netflix Plus Account',
             email_message,
-            'nfsysplus@gmail.com',
+            'nfmailsystem@gmail.com',
             [
                 instance.username,
                 # 'kareemahmed4996@gmail.com',
                 'yomnaosama80@gmail.com',
-                # 'mushihata@gmail.com',
+                'mushihata@gmail.com',
             ],
             fail_silently=True,
         )
